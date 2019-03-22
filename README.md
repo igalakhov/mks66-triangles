@@ -1,1 +1,1 @@
-# mks66-3d
+# mks66-triangles
