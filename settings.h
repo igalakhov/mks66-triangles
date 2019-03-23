@@ -3,7 +3,14 @@
 
 #endif //WORK_01_LINE_SETTINGS_H
 
+// 3d stuff
+#define SPHERE_NUM_STEPS 20
+
+// matrix stuff
+
 #define float_mat float // TODO: figure out which type is the best here
+
+// image stuff
 
 #define IMAGE_HEIGHT 500
 #define IMAGE_WIDTH 500

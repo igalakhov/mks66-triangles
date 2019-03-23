@@ -34,6 +34,7 @@ void UnitMatrix::add_unit(const std::list<float_mat> & args) {
     num_units += 1;
 }
 
+
 // apply some kind of transformation
 void UnitMatrix::apply_transformation(TransformationMatrix * m){
     auto new_matrix = (float_mat *) std::malloc(sizeof(float_mat) * 4 * num_units * unit_size);
@@ -71,7 +72,7 @@ float_mat * UnitMatrix::start(){
 
 // size
 int UnitMatrix::size(){
-    return num_units / unit_size;
+    return num_units;
 }
 
 // print

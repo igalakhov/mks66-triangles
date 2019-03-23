@@ -4,6 +4,63 @@
 
 #include "drawer.h"
 
+void Drawer::draw_points(PointMatrix * m){
+    int n = m->size();
+    float_mat * s = m->start();
+
+    while(n > 0){
+        set((int) s[0], int(s[1]));
+
+        s += 4;
+
+        n -= 1;
+    }
+}
+
+// draw polygons
+void Drawer::draw_polygons(TriangleMatrix * m){
+    int n = m->size();
+    float_mat * s = m->start();
+
+    while(n > 0){
+
+        bool BACKFACE_CULLING = false;
+        bool draw = true;
+
+        if(BACKFACE_CULLING){
+
+            float_mat view[] = {0, 0, 1};
+
+            float_mat A[] = {
+                    s[4] - s[0],
+                    s[5] - s[1],
+                    s[6] - s[2]
+            };
+
+            float_mat B[] = {
+                    s[8] - s[0],
+                    s[9] - s[1],
+                    s[10] - s[2]
+            };
+
+            float_mat * N = normalize(cross_product(A, B));
+
+
+            if(dot_product(N, view) <= 0)
+                draw = false;
+        }
+
+        if(draw) {
+            draw_line((int) s[0], (int) s[1], (int) s[4], (int) s[5]);
+            draw_line((int) s[4], (int) s[5], (int) s[8], (int) s[9]);
+            draw_line((int) s[8], (int) s[9], (int) s[0], (int) s[1]);
+        }
+
+        s += 12;
+
+        n -= 1;
+    }
+}
 
 // draw edges
 void Drawer::draw_edges(EdgeMatrix * m){
@@ -15,7 +72,7 @@ void Drawer::draw_edges(EdgeMatrix * m){
 
         start += 8;
 
-        max -= 2;
+        max -= 1;
     }
 }
 

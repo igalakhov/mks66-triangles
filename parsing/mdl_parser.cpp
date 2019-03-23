@@ -73,14 +73,14 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
                 trim(str);
                 args = split_string(str);
 
-                draw_circle(m, std::stof(args.at(0)), std::stof(args.at(1)), std::stof(args.at(2)), std::stof(args.at(3)));
+                add_circle(m, std::stof(args.at(0)), std::stof(args.at(1)), std::stof(args.at(2)), std::stof(args.at(3)));
 
         } else if (str == "hermite") {
                 std::getline(file, str);
                 trim(str);
                 args = split_string(str);
 
-                draw_hermite(m, std::stof(args.at(0)),
+                add_hermite(m, std::stof(args.at(0)),
                                 std::stof(args.at(1)),
                                 std::stof(args.at(2)),
                                 std::stof(args.at(3)),
@@ -95,7 +95,7 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
                 trim(str);
                 args = split_string(str);
 
-                draw_bezier(m, std::stof(args.at(0)),
+                add_bezier(m, std::stof(args.at(0)),
                              std::stof(args.at(1)),
                              std::stof(args.at(2)),
                              std::stof(args.at(3)),

@@ -4,7 +4,7 @@
 
 #include "parametric.h"
 
-void draw_bezier(EdgeMatrix * m, float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3){
+void add_bezier(EdgeMatrix * m, float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3){
     const int num_steps = 1000; // keep it even
 
     float step = (float) 1 / num_steps;
@@ -29,7 +29,7 @@ void draw_bezier(EdgeMatrix * m, float x0, float y0, float x1, float y1, float x
     }
 }
 
-void draw_hermite(EdgeMatrix * m, float x0, float y0, float x1, float y1, float rx0, float ry0, float rx1, float ry1){
+void add_hermite(EdgeMatrix * m, float x0, float y0, float x1, float y1, float rx0, float ry0, float rx1, float ry1){
     const int num_steps = 1000; // keep it even
 
     float step = (float) 1 / num_steps;
@@ -54,7 +54,7 @@ void draw_hermite(EdgeMatrix * m, float x0, float y0, float x1, float y1, float 
     }
 }
 
-void draw_circle(EdgeMatrix * m, float cx, float cy, float cz, float r){
+void add_circle(EdgeMatrix * m, float cx, float cy, float cz, float r){
 
     const int num_steps = 1000; // keep it even
 

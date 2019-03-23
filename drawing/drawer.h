@@ -9,16 +9,20 @@
 
 #include <cassert>
 #include "display.h"
+#include "../matrix/point_matrix.h"
 #include "../matrix/edge_matrix.h"
-#include "../matrix/polygon_matrix.h"
+#include "../matrix/triangle_matrix.h"
+#include "../matrix/utils/vector_utils.h"
 
 class Drawer : public Display {
 public:
     Drawer(); // constructor
 
     // drawing basics
+    void draw_points(PointMatrix *);
     void draw_edges(EdgeMatrix * );
-    void draw_polygons(PolygonMatrix *);
+    void draw_polygons(TriangleMatrix *);
+
     void draw_line(int, int, int, int);
     void draw_rectangle(int, int, int, int);
     void change_color(unsigned char, unsigned char, unsigned char);
