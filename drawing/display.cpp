@@ -3,7 +3,6 @@
 //
 
 #include "display.h"
-#include <iostream>
 #include <fstream>
 #include <sstream>
 

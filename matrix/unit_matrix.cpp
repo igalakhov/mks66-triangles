@@ -3,6 +3,7 @@
 //
 
 #include "unit_matrix.h"
+#include "transformation_matrix.h"
 
 // general unit matrix
 

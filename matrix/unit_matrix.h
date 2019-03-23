@@ -5,10 +5,10 @@
 #ifndef WORK_01_LINE_UNIT_MATRIX_H
 #define WORK_01_LINE_UNIT_MATRIX_H
 
+#include <iostream>
 #include <cassert>
 #include <list>
 
-#include "transformation_matrix.h"
 #include "../settings.h"
 
 class TransformationMatrix;

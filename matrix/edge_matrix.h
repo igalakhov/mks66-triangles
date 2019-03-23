@@ -2,15 +2,16 @@
 // Created by Ivan Galakhov on 2019-02-19.
 //
 
+
 #ifndef WORK_01_LINE_EDGE_MATRIX_H
 #define WORK_01_LINE_EDGE_MATRIX_H
-
-#include "unit_matrix.h"
-#include "../settings.h"
 
 #include <iostream>
 #include <thread>
 #include "math.h"
+
+#include "unit_matrix.h"
+#include "../settings.h"
 
 
 class EdgeMatrix: public UnitMatrix {

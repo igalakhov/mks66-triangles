@@ -4,8 +4,6 @@
 
 #include "transformation_matrix.h"
 
-#include <iostream>
-
 // returns the start of the matrix val array
 // the array is always of size 16
 float_mat * TransformationMatrix::get_start() {

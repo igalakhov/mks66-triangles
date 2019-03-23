@@ -4,7 +4,7 @@
 
 #include "edge_matrix.h"
 
-EdgeMatrix::EdgeMatrix() : UnitMatrix(2){
+EdgeMatrix::EdgeMatrix() : UnitMatrix(2) {
     // nothing here
 }
 
