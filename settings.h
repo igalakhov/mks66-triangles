@@ -4,7 +4,8 @@
 #endif //WORK_01_LINE_SETTINGS_H
 
 // 3d stuff
-#define SPHERE_NUM_STEPS 20
+#define SPHERE_NUM_STEPS 25
+#define TORUS_NUM_STEPS 25
 
 // matrix stuff
 

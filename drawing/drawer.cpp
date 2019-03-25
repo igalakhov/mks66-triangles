@@ -24,7 +24,7 @@ void Drawer::draw_polygons(TriangleMatrix * m){
 
     while(n > 0){
 
-        bool BACKFACE_CULLING = false;
+        bool BACKFACE_CULLING = true;
         bool draw = true;
 
         if(BACKFACE_CULLING){

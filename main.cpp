@@ -13,11 +13,11 @@ int main(){
 
       add_sphere(e, 0, 0, 0, 250);
 
-      e->apply_transformation(TransformationMatrix::rotationXYZ(45, 45, 45));
+      e->apply_transformation(TransformationMatrix::rotationXYZ(30, 75, 0));
       e->apply_transformation(TransformationMatrix::translation(250, 250, 0));
 
       d->draw_polygons(e);
 
-      d->save("../leon.ppm", "leon");
+      d->save("../leoniscool.ppm", "leon");
 
 }

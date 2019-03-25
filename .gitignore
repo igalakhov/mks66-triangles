@@ -7,6 +7,8 @@ CMakeLists.txt
 # Graphics specifics
 *.ppm
 *.png
+*.jpeg
+*.jpg
 resources/
 renders/
 
