@@ -14,6 +14,7 @@
 
 #include "../matrix/transformation_matrix.h"
 #include "../matrix/edge_matrix.h"
+#include "../matrix/triangle_matrix.h"
 #include "../drawing/drawer.h"
 #include "../drawing/parametric/parametric.h"
 #include "../drawing/3d/3d.h"
@@ -25,7 +26,8 @@ public:
     ~MDLParser();
 
     // running the file
-    void run_file(EdgeMatrix *, TransformationMatrix *, Drawer *);
+    void run_file(EdgeMatrix *, TriangleMatrix *, TransformationMatrix *, Drawer *);
+    void run_file(); // le empty
 
 private:
     std::string file_name;

@@ -19,6 +19,7 @@ public:
     ~UnitMatrix(); // destructor
 
     void print();
+    void clear();
     int size();
     float_mat * start();
     void apply_transformation(TransformationMatrix *);

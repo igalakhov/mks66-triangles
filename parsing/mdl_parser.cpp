@@ -4,7 +4,7 @@
 
 #include "mdl_parser.h"
 
-void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
+void MDLParser::run_file(EdgeMatrix * edge_matrix, TriangleMatrix * triangle_matrix,  TransformationMatrix * transformation_matrix, Drawer * drawer) {
     std::ifstream file(file_name);
     std::string str;
 
@@ -14,17 +14,18 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
         trim(str);
 
         if(str == "ident"){ // transformations
-            t->copy_vals(TransformationMatrix::identity());
+            transformation_matrix->copy_vals(TransformationMatrix::identity());
         } else if(str == "display"){
-            d->clear();
-            d->draw_edges(m);
-            d->display();
+            drawer->clear();
+            drawer->draw_edges(edge_matrix);
+            drawer->draw_polygons(triangle_matrix);
+            drawer->display();
         } else if(str == "scale"){
             std::getline(file, str);
             trim(str);
             args = split_string(str);
 
-            t->add_transformation(TransformationMatrix::dilation(
+            transformation_matrix->add_transformation(TransformationMatrix::dilation(
                     std::stof(args.at(0)),
                     std::stof(args.at(1)),
                     std::stof(args.at(2))
@@ -34,7 +35,7 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
             trim(str);
             args = split_string(str);
 
-            t->add_transformation(TransformationMatrix::translation(
+            transformation_matrix->add_transformation(TransformationMatrix::translation(
                     std::stof(args.at(0)),
                     std::stof(args.at(1)),
                     std::stof(args.at(2))
@@ -45,42 +46,43 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
             args = split_string(str);
 
             if(args.at(0) == "x"){
-                t->add_transformation(TransformationMatrix::rotationX(
+                transformation_matrix->add_transformation(TransformationMatrix::rotationX(
                         std::stof(args.at(1))
                         ));
             }
             if(args.at(0) == "y"){
-                t->add_transformation(TransformationMatrix::rotationY(
+                transformation_matrix->add_transformation(TransformationMatrix::rotationY(
                         std::stof(args.at(1))
                 ));
             }
             if(args.at(0) == "z"){
-                t->add_transformation(TransformationMatrix::rotationZ(
+                transformation_matrix->add_transformation(TransformationMatrix::rotationZ(
                         std::stof(args.at(1))
                 ));
             }
         } else if(str == "apply") {
-            m->apply_transformation(t);
+            edge_matrix->apply_transformation(transformation_matrix);
+            triangle_matrix->apply_transformation(transformation_matrix);
         }else if(str == "line"){ // drawing
                 std::getline(file, str);
                 trim(str);
                 args = split_string(str);
 
-                m->add_edge(std::stof(args.at(0)), std::stof(args.at(1)), std::stof(args.at(2)),
+                edge_matrix->add_edge(std::stof(args.at(0)), std::stof(args.at(1)), std::stof(args.at(2)),
                             std::stof(args.at(3)), std::stof(args.at(4)), std::stof(args.at(5)));
         } else if(str == "circle"){
                 std::getline(file, str);
                 trim(str);
                 args = split_string(str);
 
-                add_circle(m, std::stof(args.at(0)), std::stof(args.at(1)), std::stof(args.at(2)), std::stof(args.at(3)));
+                add_circle(edge_matrix, std::stof(args.at(0)), std::stof(args.at(1)), std::stof(args.at(2)), std::stof(args.at(3)));
 
         } else if (str == "hermite") {
                 std::getline(file, str);
                 trim(str);
                 args = split_string(str);
 
-                add_hermite(m, std::stof(args.at(0)),
+                add_hermite(edge_matrix, std::stof(args.at(0)),
                                 std::stof(args.at(1)),
                                 std::stof(args.at(2)),
                                 std::stof(args.at(3)),
@@ -95,7 +97,7 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
                 trim(str);
                 args = split_string(str);
 
-                add_bezier(m, std::stof(args.at(0)),
+                add_bezier(edge_matrix, std::stof(args.at(0)),
                              std::stof(args.at(1)),
                              std::stof(args.at(2)),
                              std::stof(args.at(3)),
@@ -109,7 +111,7 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
             trim(str);
             args = split_string(str);
 
-            add_box(m,
+            add_box(triangle_matrix,
                     std::stof(args.at(0)),
                     std::stof(args.at(1)),
                     std::stof(args.at(2)),
@@ -121,35 +123,41 @@ void MDLParser::run_file(EdgeMatrix * m, TransformationMatrix * t, Drawer * d) {
             trim(str);
             args = split_string(str);
 
-            add_sphere(m,
+            add_sphere(triangle_matrix,
                     std::stof(args.at(0)),
                     std::stof(args.at(1)),
                     std::stof(args.at(2)),
                     std::stof(args.at(3)));
 
-        } else if (str == "torus"){
+        } else if (str == "torus") {
             std::getline(file, str);
             trim(str);
             args = split_string(str);
 
-            add_torus(m,
-                    std::stof(args.at(0)),
-                    std::stof(args.at(1)),
-                    std::stof(args.at(2)),
-                    std::stof(args.at(3)),
-                    std::stof(args.at(4)));
+            add_torus(triangle_matrix,
+                      std::stof(args.at(0)),
+                      std::stof(args.at(1)),
+                      std::stof(args.at(2)),
+                      std::stof(args.at(3)),
+                      std::stof(args.at(4)));
+        } else if(str == "clear"){
+            drawer->clear();
+            edge_matrix->clear();
+            triangle_matrix->clear();
         } else if(str == "save"){ // saving and quitting
                 std::getline(file, str);
                 trim(str);
                 args = split_string(str);
 
-                d->clear();
-                d->draw_edges(m);
-                d->save(args.at(0), ".ppm");
+                drawer->clear();
+                drawer->draw_edges(edge_matrix);
+                drawer->draw_polygons(triangle_matrix);
+                drawer->save(args.at(0), ".ppm");
         } else if(str == "quit"){
             return;
         } else {
-            throw std::invalid_argument("Invalid command [" + str + "]");
+            continue;
+            //throw std::invalid_argument("Invalid command [" + str + "]");
         }
 
     }
@@ -174,6 +182,10 @@ std::vector<std::string> MDLParser::split_string(std::string str){
         tokens.push_back(buf);
 
     return tokens;
+}
+
+void MDLParser::run_file(){
+    run_file(new EdgeMatrix(), new TriangleMatrix(), TransformationMatrix::identity(), new Drawer());
 }
 
 // string trimming

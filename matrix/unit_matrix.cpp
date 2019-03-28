@@ -7,6 +7,12 @@
 
 // general unit matrix
 
+void UnitMatrix::clear() {
+    free(vals);
+    num_units = 0;
+    this->vals = (float_mat * ) std::malloc(0);
+}
+
 // add a new unit
 void UnitMatrix::add_unit(const std::list<float_mat> & args) {
 

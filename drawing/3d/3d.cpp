@@ -5,7 +5,36 @@
 #include "3d.h"
 
 void add_box(TriangleMatrix * m, float x, float y, float z, float w, float h, float d){
+    float x0 = x;
+    float y0 = y;
+    float z0 = z;
+    float x1 = x + w;
+    float y1 = y - h;
+    float z1 = z - d;
 
+    // front
+    m->add_triangle(x0, y0, z0, x0, y1, z0, x1, y1, z0);
+    m->add_triangle(x0, y0, z0, x1, y1, z0, x1, y0, z0);
+
+    // back
+    m->add_triangle(x0, y0, z1, x1, y0, z1, x0, y1, z1);
+    m->add_triangle(x1, y1, z1, x0, y1, z1, x1, y0, z1);
+
+    // top
+    m->add_triangle(x0, y0, z0, x1, y0, z0, x1, y0, z1);
+    m->add_triangle(x1, y0, z1, x0, y0, z1, x0, y0, z0);
+
+    // bottom
+    m->add_triangle(x1, y1, z0, x0, y1, z0, x0, y1, z1);
+    m->add_triangle(x1, y1, z1, x1, y1, z0, x0, y1, z1);
+
+    // left
+    m->add_triangle(x0, y1, z0, x0, y0, z0, x0, y0, z1);
+    m->add_triangle(x0, y0, z1, x0, y1, z1, x0, y1, z0);
+
+    // right
+    m->add_triangle(x1, y0, z0, x1, y1, z1, x1, y0, z1);
+    m->add_triangle(x1, y0, z0, x1, y1, z0, x1, y1, z1);
 }
 
 void add_torus(TriangleMatrix * m, float tx, float ty, float tz, float r, float R){
@@ -77,7 +106,7 @@ void add_sphere(TriangleMatrix * m, float cx, float cy, float cz, float r){
     for(int i = 0; i < num_points; i++){
         // skip the end faces
         if(i % (SPHERE_NUM_STEPS + 1) == 0 or i % (SPHERE_NUM_STEPS + 1) == SPHERE_NUM_STEPS)
-            continue;
+            continue; // TODO: fix this when you have to do lighting
 
         p1 = i*4;
         p2 = (i+1)*4;
@@ -85,11 +114,12 @@ void add_sphere(TriangleMatrix * m, float cx, float cy, float cz, float r){
         p4 = ((i + 2 + SPHERE_NUM_STEPS) % num_points) * 4;
 
         m->add_triangle(s[p1 + 0], s[p1 + 1], s[p1 + 2],
-                        s[p2 + 0], s[p2 + 1], s[p2 + 2],
-                        s[p4 + 0], s[p4 + 1], s[p4 + 2]);
-        m->add_triangle(s[p1 + 0], s[p1 + 1], s[p1 + 2],
                         s[p4 + 0], s[p4 + 1], s[p4 + 2],
                         s[p3 + 0], s[p3 + 1], s[p3 + 2]);
+
+        m->add_triangle(s[p1 + 0], s[p1 + 1], s[p1 + 2],
+                        s[p2 + 0], s[p2 + 1], s[p2 + 2],
+                        s[p4 + 0], s[p4 + 1], s[p4 + 2]);
 
     }
 
@@ -126,7 +156,7 @@ PointMatrix * generate_sphere_points(float cx, float cy, float cz, float r){
 
     float x, y, z;
 
-    for(int i = 0; i < SPHERE_NUM_STEPS; i++){
+    for(int i = 0; i <= SPHERE_NUM_STEPS; i++){
         phi = (((float) i)/((float) SPHERE_NUM_STEPS)) * 2 * M_PI;
         for(int j = 0; j <= SPHERE_NUM_STEPS; j++){
             theta = (((float) j)/((float) SPHERE_NUM_STEPS)) * M_PI;

@@ -24,10 +24,9 @@ void Drawer::draw_polygons(TriangleMatrix * m){
 
     while(n > 0){
 
-        bool BACKFACE_CULLING = true;
         bool draw = true;
 
-        if(BACKFACE_CULLING){
+        if(ENABLE_BACKFACE_CULLING){
 
             float_mat view[] = {0, 0, 1};
 

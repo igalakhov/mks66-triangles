@@ -1,19 +1,33 @@
-ident
-sphere
-110 0 0 75
-sphere
--110 0 0 75
-box
--80 -120 0 75 75 75
 torus
--30 -335 0 25 175
+0 0 0 10 50
 rotate
-x 30
+z 90
 rotate
-y -20
-move
-250 400 0
+y 30
+scale
+1 1.5 1
+translate
+310 250 0
 apply
+ident
+line
+10 150 0 10 350 0
+line
+10 150 0 110 150 0
+line
+130 150 0 130 350 0
+line
+130 350 0 230 350 0
+line
+130 250 0 230 250 0
+line
+130 150 0 230 150 0
+line
+370 150 0 370 350 0
+line
+470 150 0 470 350 0
+line
+470 150 0 370 350 0
 display
 save
-face2.ppm
+../leon.ppm
